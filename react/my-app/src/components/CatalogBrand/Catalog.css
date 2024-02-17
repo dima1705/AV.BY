@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+.catalog-brand {
+    width: 850px;
+    height: 200px;
+    margin: 5px 10px 30px;
+    font-family: "Open Sans",system-ui,sans-serif;
+    font-size: 15px;
+}
+
+.catalog-items {
+    display: flex;
+    flex-wrap: wrap;
+
+    padding: 0;
+}
+
+.catalog-item {
+    
+    flex-basis: 20%;
+    display: block;
+    padding: 6px 10px;
+    text-decoration: none;    
+}
+
+.brand {
+    text-decoration: none;
+    color:color(display-p3 0.055 0.5333 0.8745);
+}
+
+.brand:hover {
+    color: red;
+
+}
+

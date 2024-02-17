@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: color(display-p3 0.9059 0.9294 0.9529);
+
+}
+
+.App {
+    width: 1200px;
+    margin: 0 auto;
+}
