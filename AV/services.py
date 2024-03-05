@@ -49,11 +49,14 @@ def delete_car(id: int, db_session: Session):
 
 
 def get_car_photo(id: int, db_session: Session):
-    return db_session.query(AutoPhoto).filter(AutoPhoto.auto_id == id).all()
+    return db_session.query(AutoPhoto).filter(AutoPhoto.auto_id == id).first()
 
 
+def get_car_foto_all(db_session: Session):
+    return db_session.query(AutoPhoto).first()
 
 ################ КАТЕГОРИИ
+
 
 def get_main_categoryes(id:int, db_session: Session):
     return db_session.query(MainCategory).filter(MainCategory.id == id).first()

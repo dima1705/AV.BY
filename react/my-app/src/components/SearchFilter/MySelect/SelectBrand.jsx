@@ -2,7 +2,7 @@ import React from "react";
 
 const SelectBrand = ({options, defaultValue, value, onChange}) => {
     
-
+    // debugger
     return(
         <div>
             <select 

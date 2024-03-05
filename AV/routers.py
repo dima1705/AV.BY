@@ -30,7 +30,7 @@ async def delete(car_id: int, db_session: Session = Depends(get_session)):
     return services.delete_car(car_id, db_session)
 
 
-@router.get('/all/')
+@router.get('/cars/all')
 async def get_all(db_session: Session = Depends(get_session)):
     return services.get_all_cars(db_session)
 
@@ -42,7 +42,9 @@ async def get(car_id: int, db_session: Session = Depends(get_session)):
     return services.get_car_photo(car_id, db_session)
 
 
-
+@router.get('/photos/all/')
+async def get_all(db_session: Session = Depends(get_session)):
+    return services.get_car_foto_all(db_session)
 
 ######## API НА КАТЕГОРИИ
 

@@ -1,6 +1,11 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from datetime import datetime
+import time
+
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, MetaData, TIMESTAMP, JSON, Boolean
 from db import Base
 from sqlalchemy.orm import relationship
+
+metadata = MetaData()
 
 
 class MainCategory(Base):
@@ -40,8 +45,10 @@ class UsedAuto(Base):
     power = Column(String)
     comment = Column(String)
     addcat_id = Column(Integer, ForeignKey('AddCategory.id'))
+    # user_id = Column(Integer, ForeignKey('User.id'))
 
     category = relationship('AddCategory', backref='Used_auto')
+    # user = relationship('Users', backref='Used_auto')
 
 
 class AutoPhoto(Base):
@@ -82,6 +89,31 @@ class AutoGen(Base):
 
     gen_child = relationship('AutoModel', backref='auto_gen')
 
+
+class Roles(Base):
+    __tablename__ = 'role'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    permissions = Column(JSON)
+
+
+class Users(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True, index=True)
+    emai = Column(String, nullable=False)
+    username = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    registered_at = Column(TIMESTAMP, default=datetime.now)
+
+    is_active = Column(Boolean, default=True, nullable=False)
+    is_superuser = Column(Boolean, default=False, nullable=False)
+    is_verified = Column(Boolean, default=False, nullable=False)
+
+    role_id = Column(Integer, ForeignKey("role.id"))
+
+    users = relationship('Roles', backref='users')
 
 
 

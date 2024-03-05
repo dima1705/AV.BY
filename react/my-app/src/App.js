@@ -3,12 +3,14 @@ import './App.css'
 import { Navbar } from "./components/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
 import { Transport,
+  Examples,
   Parts_and_tyres,
   Journal, 
   Finance, 
   Knowledge, 
   AdvertPage,
-  VIN} from "./pages";
+  VIN,
+  SinglePage} from "./pages";
 
 
 
@@ -18,6 +20,8 @@ function App() {
     <div className="App">
       <Navbar/>
       <Routes>
+        {/* <Route path="/" element={<Examples/>}/> */}
+        <Route path="/:name/:id" element={<SinglePage/>}/>
         <Route path="/" element={<Transport/>}/>
         <Route path="/parts_and_tyres" element={<Parts_and_tyres/>}/>
         <Route path="/journal" element={<Journal/>}/>

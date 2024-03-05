@@ -5,7 +5,7 @@ import Brand from "./Catalog";
 import './Catalog.css'
 
 export const CatalogBrands = ({ brand }) => {
-
+    // debugger
     return (
         <div className="catalog-brand">
             <ul className="catalog-items">

@@ -1,0 +1,128 @@
+.auto {
+
+    display: flex;
+    height: 13rem;
+    padding: 20px;
+    margin-top: 10px;
+    border-top: 1px solid color(display-p3 0.9412 0.9569 0.9726);
+    padding-left: 20px;
+}
+
+
+
+
+.auto-name a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 22px;
+    text-decoration: none;
+    color: #0e88df;
+}
+
+.auto-name a:hover {
+    color: color(display-p3 0.9608 0.0980 0.3451); 
+}
+
+
+.auto-info {
+    padding: 0 10px;
+    padding-left: 17px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auto-params {
+
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.auto-params-item {
+    display: flex;
+}
+
+
+.auto-name {
+    width: 250px;
+
+}
+
+.auto-photo {
+    width: 200px;
+    overflow: hidden;
+}
+
+.auto-photo img {
+    max-width: 115%;
+}
+
+.param-info {
+    padding-left: 10px;
+    width: 250px;
+}
+
+
+.auto-kpp-volume-type_engine,
+.auto-kyzov,
+.auto-probeg {
+    font-size: 15px;
+    line-height: 22px;
+    font-family: "Open Sans", system-ui, sans-serif;
+}
+
+.auto-probeg {
+    margin-top: 5px;
+}
+
+.auto-price {
+    width: 150px;
+}
+
+.auto-price-bel {
+    width: 100px;
+    margin-top: -2px;
+    margin-left: -5px;
+    padding: 2px 5px 1px;
+    background-color: color(display-p3 1 0.8980 0.6196);
+    border-radius: 4px;
+    align-self: flex-start;
+    color: color(display-p3 0.0941 0.102 0.1059);
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 22px;
+    white-space: nowrap;
+}
+
+.auto-price-usd {
+    margin-top: 3px;
+    color: color(display-p3 0.4667 0.4902 0.5098);
+    font-size: 13px;
+    line-height: 17px;
+    white-space: nowrap;
+    /* width: 100px; */
+}
+
+/* .auto-comment-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+} */
+
+.auto-comment {
+    overflow-wrap: break-word;
+    line-height: 15px;
+
+}
+
+.auto-comment span {
+    color: color(display-p3 0.5686 0.5922 0.6118);
+    font-size: 13px;
+
+
+}

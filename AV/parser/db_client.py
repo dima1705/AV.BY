@@ -50,7 +50,7 @@ def save_auto(*params):
     conn.commit()
 
 
-def save_photo(s_photo, m_photo, b_photo, auto_id):
-    insert_query = """INSERT INTO "auto_photo" (s_photo, m_photo, b_photo, auto_id) VALUES (%s, %s, %s, %s);"""
-    cursor.execute(insert_query, (s_photo, m_photo, b_photo, auto_id))
+def save_photo(m_photo, auto_id):
+    insert_query = """INSERT INTO "auto_photo" (m_photo, auto_id) VALUES (%s, %s);"""
+    cursor.execute(insert_query, (m_photo, auto_id))
     conn.commit()

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const Brand = (props) => {
+    // debugger
     return (
         <li className='catalog-item'>
             <Link to ='/brand/' className='brand'>

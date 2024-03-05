@@ -1,0 +1,193 @@
+.auto-item {
+    display: flex;
+}
+
+.auto-card-name {
+    padding-right: 80px;
+    line-height: 1.0625;
+    position: relative;
+    padding: 20px 20px 11px;
+}
+
+.auto-card-title {
+    color: #000;
+    font-family: "Open Sans", system-ui, sans-serif;
+    font-size: 15px;
+}
+
+.auto-card-title h1 {
+    margin: 0 0 16px;
+}
+
+.auto-card-date {
+    list-style: none;
+    color: #777d82;
+    font-size: 13px;
+    line-height: 17px;
+}
+
+.auto-card {
+    display: flex;
+    flex-direction: column;
+    width: 999px;
+    margin-top: 12px;
+    border-bottom: 1px solid #e7edf3;
+}
+
+.auto-card-item {
+    background-color: #fff;
+    width: 885px;
+
+}
+
+.auto-card-info {
+    display: flex;
+    border-bottom: 1px solid #e7edf3;
+}
+
+.auto-card-photo {
+    overflow: hidden;
+    min-width: 600px;
+    max-width: 900px;
+    max-height: 500px;
+    height: 450px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+
+    background-position: center;
+    background-size: cover;
+    background-color: #000;
+
+    margin-left: 20px;
+    margin-top: 20px;
+
+}
+
+.auto-card-params {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-left: 15px;
+    width: 245px;
+}
+
+.param-price-byn {
+
+    margin-right: 8px;
+    color: #181a1b;
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 24px;
+    white-space: nowrap;
+}
+
+.param-price-usd {
+    color: #777d82;
+    font-size: 13px;
+    line-height: 17px;
+    margin-bottom: 30px;
+}
+
+.param-info {
+    padding: 0;
+    padding-right: 16px;
+    font-size: 15px;
+    line-height: 22px;
+    color: #000;
+    font-family: "Open Sans", system-ui, sans-serif;
+}
+
+.param-probeg {
+    margin-bottom: 8px;
+    padding: 0;
+    font-size: 15px;
+    line-height: 22px;
+    color: #000;
+    font-family: "Open Sans", system-ui, sans-serif;
+}
+
+.param-dop-info {
+    font-size: 15px;
+    line-height: 22px;
+    color: #000;
+    font-family: "Open Sans", system-ui, sans-serif;
+}
+
+.param-power {
+    margin-bottom: 135px;
+    font-size: 15px;
+    line-height: 22px;
+    color: #000;
+    font-family: "Open Sans", system-ui, sans-serif;
+    margin-top: 9px;
+    padding-top: 3px;
+    border-top: 1px solid color(display-p3 0.9059 0.9294 0.9529);
+}
+
+
+.dialogs {
+    background-color: #fff;
+    color: color(display-p3 0.0941 0.102 0.1059);
+    width: 215px;
+    height: 40px; 
+    margin-bottom: 8px;
+    box-shadow: 0 0 0 1px color(display-p3 0.8275 0.851 0.8745);
+
+    box-sizing: border-box;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 20px 8px;
+    border: none;
+    border-radius: 4px;
+    font-family: "Open Sans", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.phone {
+    width: 215px;
+    height: 40px;
+    box-shadow: 0 1px 0 color(display-p3 0 0.6392 0.4078);
+    background-color: color(display-p3 0.0431 0.7255 0.4706);
+    color: white;
+
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+    padding: 10px 20px 8px;
+    border: none;
+    border-radius: 4px;
+    font-family: "Open Sans", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.phone:hover {
+    background-color: color(display-p3 0 0.6392 0.4078);
+}
+
+.auto-card-comment {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.auto-card-comment h4 {
+    margin: 0 0 7px;
+    color: #181a1b;
+    font-family: "Montserrat", system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 24px;
+}

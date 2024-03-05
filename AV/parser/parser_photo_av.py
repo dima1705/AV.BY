@@ -11,8 +11,5 @@ def photo_parser_av(number_auto, auto_id, headers):
     photos = r.json()['photos']
 
     for i in photos:
-        s_photo = i['small']['url']
         m_photo = i['medium']['url']
-        b_photo = i['big']['url']
-
-        save_photo(s_photo, m_photo, b_photo, auto_id)
+        save_photo(m_photo, auto_id)
