@@ -1,22 +1,14 @@
-import json
 import time
 import requests
 from bs4 import BeautifulSoup
-import psycopg2
-from parser_auto import get_auto
-# from headers import headers
-from db_client import save_brand, save_model, save_generation
-
+from AV.parser.parser_auto import get_auto
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-brand_id = 0
-model_id = 0
 
-
-def auto_with_mileage(brand_id):
+def auto_with_mileage():
 
     r = requests.get('https://cars.av.by/', headers=headers)
     soup = BeautifulSoup(r.content, "html.parser")
@@ -26,14 +18,12 @@ def auto_with_mileage(brand_id):
 
     for brand in data:
         mark = brand.find("span", class_="catalog__title").text.replace(' ', '-')
-        brand_id += 1
-        print(f'Марка: {mark}')
+        print(f'Проход по марке: {mark}')
 
-        save_brand(mark)
-        get_model_and_generation(mark, brand_id)
+        get_model_and_generation(mark)
 
 
-def get_model_and_generation(mark, brand_id):
+def get_model_and_generation(mark):
 
     r = requests.get(f'https://cars.av.by/{mark}', headers=headers)
     soup = BeautifulSoup(r.content, "html.parser")
@@ -42,7 +32,7 @@ def get_model_and_generation(mark, brand_id):
 
     time.sleep(2)
 
-    ##### Модель
+                                    ##### Модель
 
     for el in data:
         time.sleep(1)
@@ -51,27 +41,8 @@ def get_model_and_generation(mark, brand_id):
 
         url = f'https://cars.av.by/{mark}/{model}'
 
-        req = requests.get(url, headers=headers)
-        soup = BeautifulSoup(req.content, "html.parser")
-        data2 = soup.find_all('label', class_='dropdown__card-button')
+        print(f'Проход по модели: {model}')
 
-        save_model(model, brand_id)
         get_auto(url)
 
-        print(f'Модель: {model} ------ {brand_id}')
-
-        time.sleep(1)
-
-        ##### Поколение
-        global model_id
-        model_id += 1
-        for i in data2:
-
-            generation = i.find('span', class_='dropdown__card-text').text
-
-            save_generation(generation, model_id)
-            print(f'Поколение: {generation} ------ {model_id}')
-
-
-auto_with_mileage(brand_id)
 

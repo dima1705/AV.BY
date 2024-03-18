@@ -7,16 +7,19 @@
     line-height: 1.0625;
     position: relative;
     padding: 20px 20px 11px;
+    border-bottom: 1px solid #e7edf3;
 }
 
 .auto-card-title {
-    color: #000;
+    color: #181a1b;
     font-family: "Open Sans", system-ui, sans-serif;
     font-size: 15px;
 }
 
 .auto-card-title h1 {
     margin: 0 0 16px;
+    font-size: 32px;
+    width: 620px;
 }
 
 .auto-card-date {
@@ -69,7 +72,7 @@
     flex-direction: column;
     padding-top: 20px;
     padding-left: 15px;
-    width: 245px;
+    width: 250px;
 }
 
 .param-price-byn {
@@ -92,7 +95,6 @@
 
 .param-info {
     padding: 0;
-    padding-right: 16px;
     font-size: 15px;
     line-height: 22px;
     color: #000;
@@ -126,6 +128,9 @@
     border-top: 1px solid color(display-p3 0.9059 0.9294 0.9529);
 }
 
+.param-buttons{
+    margin-top: 23px;
+}
 
 .dialogs {
     background-color: #fff;
@@ -179,15 +184,25 @@
 }
 
 .auto-card-comment {
+    margin-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    width: 640px;
 }
 
 .auto-card-comment h4 {
+    
     margin: 0 0 7px;
     color: #181a1b;
     font-family: "Montserrat", system-ui, sans-serif;
     font-size: 22px;
     font-weight: 800;
     line-height: 24px;
+}
+
+.auto-card-comment p {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 24px;
+    font-family: "Open Sans", system-ui, sans-serif;
 }

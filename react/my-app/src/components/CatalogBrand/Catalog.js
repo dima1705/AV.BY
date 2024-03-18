@@ -1,17 +1,13 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+// import React from 'react';
+// import { Link } from "react-router-dom";
 
-const Brand = (props) => {
-    // debugger
-    return (
-        <li className='catalog-item'>
-            <Link to ='/brand/' className='brand'>
-                {props.brand.brand}
-            </Link>
-        </li>
+// const Brand = (props) => {
+//     // debugger
+//     return (
+
 
         
-    )
-}
+//     )
+// }
 
-export default Brand
+// export default Brand

@@ -1,9 +1,11 @@
 .filter {
     /* border: 2px solid #000; */
     margin-bottom: 45px;
+    margin-top: 20px;
 }
 
 .filter-title {
+    margin-top: 20px;
     margin-bottom: 20px;
     font-family: "Montserrat",system-ui,sans-serif;
     font-size: 20px;

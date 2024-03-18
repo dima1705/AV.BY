@@ -17,7 +17,7 @@ import AutoJurnal from "../../components/AutoJournal/Autojurnal.jsx";
 
 
 const API_URL = 'http://127.0.0.1:8000/used_cars/all/'
-const API_URL_BRAND = 'http://127.0.0.1:8000/used_cars/brand/all/'
+const API_URL_BRAND = 'http://127.0.0.1:8000/av/brands'
 
 export const Transport = () => {
 
@@ -30,15 +30,15 @@ export const Transport = () => {
         
 
         const getBrand = async () => {
-            const response = await axios.get(API_URL_BRAND)
+            const response = await axios.get('http://127.0.0.1:8000/av/brands')
             setBrand(response.data)
         }
-
+        
         // getAuto()
         getBrand()
     }, [])
 
-
+    // debugger
     // const lastAutoIndex = currentPage * carsPerPage
     // const firstAutoIndex = lastAutoIndex - carsPerPage
     // const currentAuto = auto.slice(firstAutoIndex, lastAutoIndex)
@@ -53,8 +53,9 @@ export const Transport = () => {
                     <div className="title">
                         <h1>Объявления о продаже автомобилей с пробегом в Беларуси</h1>
                     </div>
-                    <CatalogBrands brand={brand}/>
-                    <SearchFilter brand={brand}/>
+                    {/* <CatalogBrands brand={brand}/> */}
+                    {brand.map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                    <SearchFilter/>
                     {/* <UsedAuto auto={currentAuto} /> */}
                     {/* <Pagination
                         carsPerPage={carsPerPage}

@@ -10,7 +10,9 @@ import { Transport,
   Knowledge, 
   AdvertPage,
   VIN,
-  SinglePage} from "./pages";
+  SinglePage,
+  LoginPage,
+  RegistrationPage} from "./pages";
 
 
 
@@ -21,13 +23,15 @@ function App() {
       <Navbar/>
       <Routes>
         {/* <Route path="/" element={<Examples/>}/> */}
-        <Route path="/:name/:id" element={<SinglePage/>}/>
+        <Route path="/:brand/:model/:id" element={<SinglePage/>}/>
         <Route path="/" element={<Transport/>}/>
         <Route path="/parts_and_tyres" element={<Parts_and_tyres/>}/>
         <Route path="/journal" element={<Journal/>}/>
         <Route path="/finance" element={<Finance/>}/>
         <Route path="/knowledge" element={<Knowledge/>}/>
         <Route path="/advertPage" element={<AdvertPage/>}/>
+        <Route path="/loginPage" element={<LoginPage/>}/>
+        <Route path="/registrationPage" element={<RegistrationPage/>}/>
         <Route path="/VIN" element={<VIN/>}/>
 
       </Routes>

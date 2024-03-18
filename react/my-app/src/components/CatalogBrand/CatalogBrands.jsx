@@ -3,15 +3,20 @@ import React from "react";
 import Brand from "./Catalog";
 
 import './Catalog.css'
+import { Link } from "react-router-dom";
 
-export const CatalogBrands = ({ brand }) => {
+export const CatalogBrands = (props) => {
     // debugger
     return (
         <div className="catalog-brand">
             <ul className="catalog-items">
-                {brand.map(brand => <Brand brand={brand} key={brand.id} />)}
+                <li className='catalog-item'>
+                    <Link to='/brand/' className='brand'>
+                        {props.brand.brand}
+                    </Link>
+                </li>
             </ul>
-            
+
         </div>
     )
 }

@@ -68,7 +68,7 @@ export const Navbar = () => {
             <div className="nav-person">
                 <ul >
                     <li>
-                        <Link to='/'>Войти</Link>
+                        <Link to='/loginPage'>Войти</Link>
                     </li>
                     <li>
                         <Link to='/advertPage' className="advert">Подать объявление</Link>

@@ -77,13 +77,13 @@ const SearchFilter = ({ brand }) => {
 
     useEffect(() => {
             const getAuto = async () => {
-                const response = await axios.get('http://127.0.0.1:8000/used_cars/cars/all/')
+                const response = await axios.get('http://127.0.0.1:8000/av/cars/all')
                 setAuto(response.data)
             }
             getAuto()
      }, [])
 
-
+    //  debugger
 
     return (
         <div>
@@ -145,21 +145,23 @@ const SearchFilter = ({ brand }) => {
                     Найдено {auto.length} Объявлений
                 </div>
                 {
-                    auto.filter(
-                        car =>
-                            (car.name.toLowerCase().includes(autoQuery.toLowerCase()) || autoQuery === '') &&
-                            (car.name.toLowerCase().includes(modelQuery.toLowerCase()) || modelQuery === '') &&
-                            (car.name.toLowerCase().includes(genQuery.toLowerCase()) || genQuery === '') &&
+                    // auto.filter(
+                    //     car =>
+                    //         (car.name.toLowerCase().includes(autoQuery.toLowerCase()) || autoQuery === '') &&
+                    //         (car.name.toLowerCase().includes(modelQuery.toLowerCase()) || modelQuery === '') &&
+                    //         (car.name.toLowerCase().includes(genQuery.toLowerCase()) || genQuery === '') &&
 
-                            (yearQueryFrom === '' || Number(car.year.replace(/г./, '')) >= Number(yearQueryFrom)) &&
-                            (yearQueryTo === '' || Number(car.year.replace(/г./, '')) <= Number(yearQueryTo)) &&
+                    //         (yearQueryFrom === '' || Number(car.year.replace(/г./, '')) >= Number(yearQueryFrom)) &&
+                    //         (yearQueryTo === '' || Number(car.year.replace(/г./, '')) <= Number(yearQueryTo)) &&
 
-                            (priceQueryFrom === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) >= Number(priceQueryFrom)) &&
-                            (priceQueryTo === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) <= Number(priceQueryTo)) &&
+                    //         (priceQueryFrom === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) >= Number(priceQueryFrom)) &&
+                    //         (priceQueryTo === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) <= Number(priceQueryTo)) &&
 
-                            (volumeQueryFrom === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) >= Number(volumeQueryFrom)) &&
-                            (volumeQueryTo === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) <= Number(volumeQueryTo))
-                    ).map(car => (
+                    //         (volumeQueryFrom === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) >= Number(volumeQueryFrom)) &&
+                    //         (volumeQueryTo === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) <= Number(volumeQueryTo))
+                            
+                    // )
+                    auto.map(car => (
                         <Suspense fallback={<p>Loading...</p>} key={car.id}><Auto auto={car} key={car.id} /></Suspense>
                     ))
                 }

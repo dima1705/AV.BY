@@ -14,72 +14,70 @@ export const SinglePage = () => {
 
     useEffect(() => {
         const getAutoById = async () => {
-            const response = await axios.get(`http://localhost:8000/used_cars/{id}?car_id=${id}`)
+            const response = await axios.get(`http://127.0.0.1:8000/av/cars/${id}`)
             setAuto(response.data)
         }
 
         getAutoById()
 
         const getPhoto = async () => {
-            const response = await axios.get(`http://localhost:8000/used_cars/photos/{id}?car_id=${id}`)
-            setPhotos(response.data)
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/av/cars/photos/${id}`)
+                setPhotos(response.data[0])
+            } catch (e) {
+                console.log(e)
+            }
+            
             
         }
 
         getPhoto()
     
-    }, [id])
-    // debugger
+    }, [])
     console.log(photos)
 
     return (
         <div className="auto-item">
 
             <div className="auto-card">
-                {auto && (
+                {auto.map(auto => (
                     <div className="auto-card-item">
                         <div className="auto-card-name">
                             <div className="auto-card-title">
-                                <h1>{auto.name}</h1>
+                                <h1>{auto.brand}&nbsp;{auto.model}&nbsp;{auto.generation_with_years.split(' ')[0]},&nbsp;{auto.year}г.&nbsp;в г.&nbsp;{auto.location.split(',')[0]}</h1>
                             </div>
                             <div className="auto-card-date">
-                                Опубликовано вчера №{auto.id}{auto.id}{auto.id}
+                                Опубликовано вчера 
                             </div>
                         </div>
                         <div className="auto-card-info">
-                            {/* {photos.map(photo => ( */}
-                                <div 
+                               <div 
                                 key={photos.id} 
                                 className="auto-card-photo"
-                                style={{backgroundImage: `url(${photos.m_photo})`}}
-                                >
-                                    {/* {console.log(photo.shift())} */}
-                                    {/* <img src={photos.m_photo} /> */}
-                                </div>
-                            {/* ))} */}
-
+                                style={{backgroundImage: `url(${photos})`}}
+                                /> 
                             <div className="auto-card-params">
                                 <div  className="param-price-byn">
-                                    {auto.price_for_bel_rub}р.
+                                    {auto.price_amount_byn} р.
                                 </div>
                                 <div className="param-price-usd">
-                                    {auto.price_for_usd}$
+                                    ≈ {auto.price_amount_usd} $
                                 </div>
                                 <div className="param-info">
-                                    {auto.year},
-                                    {auto.kpp},{auto.volume},{auto.type_engine},
+                                    {auto.year},&nbsp;
+                                    {auto.transmission_type},&nbsp;{auto.engine_capacity},&nbsp;{auto.engine_type},
 
                                 </div>
                                 <div className="param-probeg">
-                                    {auto.probeg}
+                                    {auto.mileage_km} км
                                 </div>
                                 <div className="param-dop-info">
-                                    {auto.kyzov},
-                                    {auto.privod},
+                                    {auto.body_type},&nbsp;
+                                    {auto.drive_type},&nbsp;
                                     {auto.color}
                                 </div>
                                 <div className="param-power">
-                                    {auto.power}
+                                    {auto.power} л.с.,&nbsp;расход {auto.fuel_consumption} л.
                                 </div>
 
                                 <div className="param-buttons">
@@ -90,11 +88,11 @@ export const SinglePage = () => {
                         </div>
                         <div className="auto-card-comment">
                             <h4>Описание</h4>
-                            <p>{auto.comment}</p>
+                            <p>{auto.description}</p>
                                 {console.log(auto.power)}
                         </div>
                     </div>
-                )
+                ))
                 }
             </div>
 

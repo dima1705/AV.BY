@@ -1,119 +1,157 @@
 from datetime import datetime
-import time
+from typing import Annotated, Optional
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, MetaData, TIMESTAMP, JSON, Boolean
-from db import Base
-from sqlalchemy.orm import relationship
+from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
+from sqlalchemy import ForeignKey, MetaData, Boolean, text
+from sqlalchemy.orm import relationship, DeclarativeBase, mapped_column, Mapped
 
-metadata = MetaData()
-
-
-class MainCategory(Base):
-    __tablename__ = "MainCategory"
-
-    id = Column(Integer, primary_key=True, index=True)
-    category = Column(String)
-
-    # cat_parent = relationship('AddCategory', backref='MainCategory')
+metadata_obj = MetaData()
+str_256 = Annotated[str, 256]
 
 
-class AddCategory(Base):
-    __tablename__ = "AddCategory"
-
-    id = Column(Integer, primary_key=True, index=True)
-    category = Column(String)
-    maincategory_id = Column(Integer, ForeignKey("MainCategory.id"))
-
-    cat_child = relationship('MainCategory', backref='AddCategory')
+class Base(DeclarativeBase):
+    metadata = metadata_obj
 
 
-class UsedAuto(Base):
-    __tablename__ = "Used_auto"
+intpk = Annotated[int, mapped_column(primary_key=True)]
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    price_for_bel_rub = Column(String)
-    price_for_usd = Column(String)
-    year = Column(String)
-    kpp = Column(String)
-    volume = Column(String)
-    type_engine = Column(String)
-    probeg = Column(String)
-    kyzov = Column(String)
-    privod = Column(String)
-    color = Column(String)
-    power = Column(String)
-    comment = Column(String)
-    addcat_id = Column(Integer, ForeignKey('AddCategory.id'))
-    # user_id = Column(Integer, ForeignKey('User.id'))
+registered_at = Annotated[datetime, mapped_column(
+    server_default=text("TIMEZONE('utc',now())")
+)]
 
-    category = relationship('AddCategory', backref='Used_auto')
-    # user = relationship('Users', backref='Used_auto')
+
+class Auto(Base):
+
+    __tablename__ = "auto"
+
+    id: Mapped[intpk]
+    brand: Mapped[str]
+    model: Mapped[str]
+    generation_with_years: Mapped[str]
+    year: Mapped[int]
+    engine_capacity: Mapped[float]
+    engine_type: Mapped[str]
+    transmission_type: Mapped[str]
+    body_type: Mapped[str]
+    drive_type: Mapped[str]
+    color: Mapped[str]
+    mileage_km: Mapped[int]
+    power: Mapped[Optional[int]]
+    fuel_consumption: Mapped[Optional[float]]
+    price_amount_usd: Mapped[int]
+    price_amount_byn: Mapped[int]
+    description: Mapped[str]
+    main_photo: Mapped[str]
+    location: Mapped[str]
+    user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
+
+    user: Mapped["User"] = relationship(
+        back_populates="auto"
+    )
+
+    auto_photo: Mapped[list["AutoPhoto"]] = relationship(
+        back_populates="auto"
+    )
 
 
 class AutoPhoto(Base):
+
     __tablename__ = "auto_photo"
 
-    id = Column(Integer, primary_key=True, index=True)
-    s_photo = Column(String)
-    m_photo = Column(String)
-    b_photo = Column(String)
-    auto_id = Column(Integer, ForeignKey("Used_auto.id"))
+    id: Mapped[intpk]
+    m_photo: Mapped[str]
+    auto_id: Mapped[int] = mapped_column(ForeignKey("auto.id", ondelete="CASCADE"))
 
-    photo_child = relationship('UsedAuto', backref='auto_photo')
+    auto: Mapped["Auto"] = relationship(
+        back_populates="auto_photo"
+    )
+
+    def __str__(self):
+        return self.m_photo
 
 
-class AutoBrand(Base):
+class Brand(Base):
+
     __tablename__ = "auto_brand"
 
-    id = Column(Integer, primary_key=True, index=True)
-    brand = Column(String)
+    id: Mapped[intpk]
+    brand: Mapped[str]
+
+    auto_model: Mapped[list["Model"]] = relationship(
+        back_populates="auto_brand"
+    )
+
+    def __str__(self):
+        return self.brand
 
 
-class AutoModel(Base):
+class Model(Base):
     __tablename__ = "auto_model"
 
-    id = Column(Integer, primary_key=True, index=True)
-    model = Column(String)
-    brand_id = Column(Integer, ForeignKey("auto_brand.id"))
+    id: Mapped[intpk]
+    model: Mapped[str]
+    brand_id: Mapped[int] = mapped_column(ForeignKey("auto_brand.id", ondelete="CASCADE"))
 
-    model_child = relationship('AutoBrand', backref='auto_model')
+    auto_brand: Mapped["Brand"] = relationship(
+        back_populates="auto_model"
+    )
 
+    auto_generation: Mapped[list["Generation"]] = relationship(
+        back_populates="auto_model"
+    )
 
-class AutoGen(Base):
-    __tablename__ = "auto_gen"
-
-    id = Column(Integer, primary_key=True, index=True)
-    generation = Column(String)
-    model_id = Column(Integer, ForeignKey("auto_model.id"))
-
-    gen_child = relationship('AutoModel', backref='auto_gen')
-
-
-class Roles(Base):
-    __tablename__ = 'role'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    permissions = Column(JSON)
+    def __str__(self):
+        return self.model
 
 
-class Users(Base):
+class Generation(Base):
+
+    __tablename__ = "auto_generation"
+
+    id: Mapped[intpk]
+    generation: Mapped[str]
+    model_id: Mapped[int] = mapped_column(ForeignKey("auto_model.id", ondelete="CASCADE"))
+
+    auto_model: Mapped["Model"] = relationship(
+        back_populates="auto_generation"
+    )
+
+    def __str__(self):
+        return self.generation
+
+
+class User(SQLAlchemyBaseUserTable[int], Base):
+
     __tablename__ = 'user'
 
-    id = Column(Integer, primary_key=True, index=True)
-    emai = Column(String, nullable=False)
-    username = Column(String, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    registered_at = Column(TIMESTAMP, default=datetime.now)
+    id: Mapped[intpk]
+    email: Mapped[str]
+    username: Mapped[str]
+    phone: Mapped[Optional[int]]
+    hashed_password: Mapped[str]
+    registered_at: Mapped[registered_at]
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    is_superuser: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
+    )
+    is_verified: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
+    )
 
-    is_active = Column(Boolean, default=True, nullable=False)
-    is_superuser = Column(Boolean, default=False, nullable=False)
-    is_verified = Column(Boolean, default=False, nullable=False)
+    auto: Mapped[list["Auto"]] = relationship(
+        back_populates="user"
+    )
 
-    role_id = Column(Integer, ForeignKey("role.id"))
-
-    users = relationship('Roles', backref='users')
-
+    def __str__(self):
+        return f"User {self.email}"
 
 
+class TGUser(Base):
+
+    __tablename__ = 'TGUser'
+
+    id: Mapped[intpk]
+    id_user: Mapped[int]
+    username: Mapped[str]
+    first_name: Mapped[Optional[str]]
+    last_name: Mapped[Optional[str]]
