@@ -1,5 +1,4 @@
 .filter {
-    /* border: 2px solid #000; */
     margin-bottom: 45px;
     margin-top: 20px;
 }
@@ -12,14 +11,16 @@
     font-weight: 800;
 }
 
-.main-filter input {
-    display: inline;
+.main-filter .filter-select {
     width: 294px;
-    padding: 10px;
     border-color: white;
-    border: 1px solid #dee4e9;
     margin-bottom: 7px;
     box-shadow: 0 7px 7px rgb(211, 217, 223);
+}
+
+.filter-select {
+    width: 294px;
+    height: 50px;
 }
 
 
@@ -33,7 +34,6 @@
     padding: 10px;
     border-color: white;
     border: 0.1px solid #dee4e9;
-    /* margin-bottom: 7px; */
 }
 
 .filter-button {

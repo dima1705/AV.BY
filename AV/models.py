@@ -127,7 +127,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     id: Mapped[intpk]
     email: Mapped[str]
     username: Mapped[str]
-    phone: Mapped[Optional[int]]
+    phone: Mapped[Optional[str]]
     hashed_password: Mapped[str]
     registered_at: Mapped[registered_at]
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
@@ -152,6 +152,32 @@ class TGUser(Base):
 
     id: Mapped[intpk]
     id_user: Mapped[int]
-    username: Mapped[str]
+    username: Mapped[Optional[str]]
     first_name: Mapped[Optional[str]]
     last_name: Mapped[Optional[str]]
+
+    Jobs: Mapped["Jobs"] = relationship(
+        back_populates="TGUser"
+    )
+
+    def __str__(self):
+        return f"ТГ пользователь {self.id_user}: {self.first_name}"
+
+
+class Jobs(Base):
+
+    __tablename__ = 'Jobs'
+
+    id: Mapped[intpk]
+    title: Mapped[str]
+    text: Mapped[str]
+    time: Mapped[Optional[str]]
+    seconds: Mapped[Optional[int]]
+    minutes: Mapped[Optional[int]]
+    hours: Mapped[Optional[int]]
+    days: Mapped[Optional[int]]
+    tg_users_id: Mapped[Optional[int]] = mapped_column(ForeignKey("TGUser.id", ondelete="CASCADE"))
+
+    TGUser: Mapped[list["TGUser"]] = relationship(
+        back_populates="Jobs"
+    )

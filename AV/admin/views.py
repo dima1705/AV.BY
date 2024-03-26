@@ -1,6 +1,8 @@
 from sqladmin import ModelView
-
-from models import User, Auto, TGUser, Brand, Model, Generation
+from sqladmin import action
+from models import User, Auto, TGUser, Brand, Model, Generation, Jobs
+from starlette.requests import Request
+from starlette.responses import RedirectResponse
 
 
 class UserAdmin(ModelView, model=User):
@@ -10,6 +12,25 @@ class UserAdmin(ModelView, model=User):
     name = 'Пользователь'
     name_plural = 'Пользователи'
     icon = "fa-solid fa-user"
+
+    @action(
+        name="approve_users",
+        label="Approve",
+        confirmation_message="Are you sure?",
+        add_in_detail=True,
+        add_in_list=True,
+    )
+    async def approve_users(self, request: Request):
+        pks = request.query_params.get("pks", "").split(",")
+        if pks:
+            for pk in pks:
+                model: User = await self.get_object_for_edit(pk)
+
+        referer = request.headers.get("Referer")
+        if referer:
+            return RedirectResponse(referer)
+        else:
+            return RedirectResponse(request.url_for("admin:list", identity=self.identity))
 
 
 class AutoAdmin(ModelView, model=Auto):
@@ -24,6 +45,21 @@ class TGUserAdmin(ModelView, model=TGUser):
     name = 'ТГ пользователь'
     name_plural = 'ТГ пользователи'
     icon = "fa-solid fa-user"
+
+    @action(
+        name="add_job",
+        label="Добавить задание",
+        confirmation_message="Вы уверены?",
+        add_in_detail=True,
+        add_in_list=True,
+    )
+    async def add_job(self, request: Request):
+        pks = request.query_params.get("pks", "").split(",")
+        if pks:
+            for pk in pks:
+                model: TGUser = await self.get_object_for_edit(pk)
+
+            return RedirectResponse('/admin/jobs/create')
 
 
 class BrandAdmin(ModelView, model=Brand):
@@ -43,3 +79,8 @@ class GenerationAdmin(ModelView, model=Generation):
     name = 'Поколение'
     name_plural = 'Поколения'
 
+
+class JobsAdmin(ModelView, model=Jobs):
+    column_list = [c.name for c in Jobs.__table__.c]
+    name = 'Задание'
+    name_plural = 'Задания'

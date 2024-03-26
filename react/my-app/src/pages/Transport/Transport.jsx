@@ -30,7 +30,7 @@ export const Transport = () => {
         
 
         const getBrand = async () => {
-            const response = await axios.get('http://127.0.0.1:8000/av/brands')
+            const response = await axios.get('http://127.0.0.1:8000/bmg/get_bmg')
             setBrand(response.data)
         }
         

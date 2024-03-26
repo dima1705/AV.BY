@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: str
     DB_NAME: str
-    API_TOKEN: str
 
     @property
     def DB_URL_psycopg(self):

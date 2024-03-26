@@ -13,6 +13,8 @@ import { Transport,
   SinglePage,
   LoginPage,
   RegistrationPage} from "./pages";
+import { Footer } from './components/Footer/Footer';
+import AutoJurnal from './components/AutoJournal/Autojurnal';
 
 
 
@@ -33,8 +35,8 @@ function App() {
         <Route path="/loginPage" element={<LoginPage/>}/>
         <Route path="/registrationPage" element={<RegistrationPage/>}/>
         <Route path="/VIN" element={<VIN/>}/>
-
       </Routes>
+      <Footer/>
     </div>
   );
 }

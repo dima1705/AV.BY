@@ -1,6 +1,7 @@
 from sqlalchemy import insert, select
 from models import Auto
-from db import session_factory, sync_engin, async_engin
+from db import session_factory
+from .photos_orm import PhotoORM
 
 
 class AutoORM:
@@ -11,7 +12,8 @@ class AutoORM:
             insert_auto = insert(Auto).values(dict(auto))
             session.execute(insert_auto)
             session.commit()
-            print(auto)
+            PhotoORM.insert_photo(auto.main_photo)
+            return f"Авто успешно добавлено"
 
     @staticmethod
     def select_auto():

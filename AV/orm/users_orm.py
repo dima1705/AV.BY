@@ -1,21 +1,36 @@
 from sqlalchemy import insert, select
 from db import session_factory
 from models import User
+from fastapi import status
 
 
 class UsersORM:
 
     @staticmethod
-    def select_users():
+    def create_users(user):
         with session_factory() as session:
-            select_users = (
-                select(User.email)
-            )
-            res = session.execute(select_users)
-            result_select_users = res.unique().scalars().all()
-            return result_select_users
+            insert_auto = insert(User).values(dict(user))
+            session.execute(insert_auto)
+            session.commit()
+            print(user)
 
     @staticmethod
-    def create_users():
+    def get_auth(user):
         with session_factory() as session:
-            pass
+            query = (select(User.email, User.hashed_password))
+            res_query = session.execute(query)
+            query_d = dict(res_query.all())
+
+            try:
+                if query_d[f'{user.email}'] == user.hashed_password:
+                    query_user = (select(User.id, User.email))
+                    res_query_user = session.execute(query_user)
+                    res = dict(res_query_user.all())
+                    for k, v in res.items():
+                        if v == user.email:
+                            return status.HTTP_200_OK, f"User_id: {k}", f"email: {v}"
+                else:
+                    return status.HTTP_422_UNPROCESSABLE_ENTITY
+            except:
+                return status.HTTP_422_UNPROCESSABLE_ENTITY
+            # print(user.email)

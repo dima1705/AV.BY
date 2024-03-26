@@ -14,26 +14,21 @@ export const SinglePage = () => {
 
     useEffect(() => {
         const getAutoById = async () => {
-            const response = await axios.get(`http://127.0.0.1:8000/av/cars/${id}`)
+            const response = await axios.get(`http://127.0.0.1:8000/auto/${id}`)
             setAuto(response.data)
         }
 
         getAutoById()
 
         const getPhoto = async () => {
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/av/cars/photos/${id}`)
-                setPhotos(response.data[0])
-            } catch (e) {
-                console.log(e)
-            }
-            
-            
-        }
+            const response = await axios.get(`http://127.0.0.1:8000/photos/${id}`)
+            setPhotos(response.data[0])
+            }  
+        
 
         getPhoto()
     
-    }, [])
+    }, [id])
     console.log(photos)
 
     return (

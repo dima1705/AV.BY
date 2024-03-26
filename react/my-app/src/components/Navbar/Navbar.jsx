@@ -61,7 +61,7 @@ export const Navbar = () => {
                         <Link to='/finance'>Финансы</Link>
                     </li>
                     <li>
-                        <Link to='/VIN' className="vin">Проверка VIN</Link>
+                        <Link to='https://av.by/vin' className="vin">Проверка VIN</Link>
                     </li>
                 </ul>
             </div>

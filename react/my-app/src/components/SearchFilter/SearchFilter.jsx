@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useMemo, lazy, Suspense, } from "react";
-import SelectBrand from "./MySelect/SelectBrand";
-import SelectModel from "./MySelect/SelectModel";
+// import SelectBrand from "./MySelect/SelectBrand";
+// import SelectModel from "./MySelect/SelectModel";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 // import Auto from "../UsedAuto/Auto/Auto";
+import { Select } from "antd";
 
 import './SearchFilter.css'
 
@@ -13,7 +14,7 @@ const Auto = lazy(() => import('../UsedAuto/Auto/Auto'))
 const SearchFilter = ({ brand }) => {
 
 
-    
+
     const [auto, setAuto] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [fetching, setFetching] = useState(true)
@@ -22,7 +23,7 @@ const SearchFilter = ({ brand }) => {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const autoQuery = searchParams.get('auto') || ''  // Получаем параметр запроса
+    const brandQuery = searchParams.get('brand') || ''  // Получаем параметр запроса
     const modelQuery = searchParams.get('model') || ''
     const genQuery = searchParams.get('gen') || ''
 
@@ -35,15 +36,24 @@ const SearchFilter = ({ brand }) => {
     const volumeQueryFrom = searchParams.get('volume_from') || ''
     const volumeQueryTo = searchParams.get('volume_to') || ''
 
+    const { Option } = Select;
+    const [selectedBrand, setSelectedBrand] = useState(null)
+    const [brands, setBrands] = useState([])
+    const [selectedModel, setSelectedModel] = useState(null)
+    const [models, setModels] = useState([])
+    const [selectedGen, setSelectedGen] = useState(null)
+    const [gen, setGen] = useState([])
+
+
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const form = e.target
 
-        const brand = form.brand.value
-        const model = form.model.value
-        const gen = form.gen.value
+        const brand = selectedBrand
+        const model = selectedModel
+        const gen = selectedGen
 
         const year_from = form.year_from.value
         const year_to = form.year_to.value
@@ -76,41 +86,98 @@ const SearchFilter = ({ brand }) => {
     }
 
     useEffect(() => {
-            const getAuto = async () => {
-                const response = await axios.get('http://127.0.0.1:8000/av/cars/all')
-                setAuto(response.data)
-            }
-            getAuto()
-     }, [])
+        const getAuto = async () => {
+            const response = await axios.get('http://127.0.0.1:8000/auto/all')
+            setAuto(response.data)
+        }
+        getAuto()
 
-    //  debugger
+        const getBrand = async () => {
+            const response = await axios.get('http://127.0.0.1:8000/bmg/get_bmg')
+            setBrands(response.data)
+        }
+        getBrand()
+
+    }, [])
+
+    const fetchModelsByBrand = (brandId) => {
+        const selectedBrand = brands.find((brand) => brand.brand === brandId);
+        if (selectedBrand) {
+            setModels(selectedBrand.auto_model);
+
+        }
+        setSelectedModel(null);
+    };
+    // debugger
+    const fetchGensByModel = (modelId) => {
+        const selectedModel = models.find((model) => model.model === modelId);
+        if (selectedModel) {
+            setGen(selectedModel.auto_generation);
+
+        }
+        setSelectedGen(null);
+    };
+
 
     return (
         <div>
-            {/* <SelectBrand
-                value={selectedSort}
-                onChange={(sort) => sortAuto(sort, brand.id)}
-                defaultValue="Марка"
-                options={brand}
-            /> */}
-            {/* <SelectModel
-                value={selectedSort}
-                onChange={sortAuto}
-                defaultValue="Модель"
-                options={models}
-            /> */}
-
-            {/* <UsedAuto auto={filterAuto} /> */}
-
             <div className="filter-title">
                 Поиск по параметрам
             </div>
             <div className="filter">
-                <form autoComplete="off" onSubmit={handleSubmit} >
+                <form onSubmit={handleSubmit} >
                     <div className="main-filter">
-                        <input type="searh" name="brand" placeholder="Марка" />
-                        <input type="searh" name="model" placeholder="Модель" />
-                        <input type="searh" name="gen" placeholder="Поколение" />
+                        <Select
+                            showSearch
+                            className="filter-select"
+                            placeholder="Марка"
+                            name="brand"
+                            value={selectedBrand}
+                            onChange={(value) => {
+                                fetchModelsByBrand(value);
+                                setSelectedBrand(value);
+                            }}
+                        >
+                            {brands.map((brand) => (
+                                <Option key={brand.id} value={brand.brand}>
+                                    {brand.brand}
+                                </Option>
+                            ))}
+                        </Select>
+
+
+                        <Select
+                            showSearch
+                            className="filter-select"
+                            placeholder="Модель"
+                            name="model"
+                            value={selectedModel }
+                            onChange={(value) => {
+                                fetchGensByModel(value);
+                                setSelectedModel(value)
+                            }}
+                            disabled={!selectedBrand}
+                        >
+                            {models.map((model) => (
+                                <Option key={model.id} value={model.model}>
+                                    {model.model}
+                                </Option>
+                            ))}
+                        </Select>
+                        <Select
+                            className="filter-select"
+                            placeholder="Поколение"
+                            name="gen"
+                            value={selectedGen}
+                            onChange={(value) => setSelectedGen(value)}
+                            disabled={!selectedModel}
+                        >
+                            {gen.map((gen) => (
+                                <Option key={gen.id} value={gen.generation}>
+                                    {gen.generation}
+                                </Option>
+                            ))}
+                        </Select>
                     </div>
 
                     <div className="add-filter">
@@ -144,26 +211,24 @@ const SearchFilter = ({ brand }) => {
                 <div className="auto-count">
                     Найдено {auto.length} Объявлений
                 </div>
-                {
-                    // auto.filter(
-                    //     car =>
-                    //         (car.name.toLowerCase().includes(autoQuery.toLowerCase()) || autoQuery === '') &&
-                    //         (car.name.toLowerCase().includes(modelQuery.toLowerCase()) || modelQuery === '') &&
-                    //         (car.name.toLowerCase().includes(genQuery.toLowerCase()) || genQuery === '') &&
+                {auto.filter(auto => (
+                    (auto.brand === brandQuery || brandQuery === '') &&
+                    (auto.model === modelQuery || modelQuery === '') &&
+                    (auto.generation_with_years === genQuery || genQuery === '') &&
 
-                    //         (yearQueryFrom === '' || Number(car.year.replace(/г./, '')) >= Number(yearQueryFrom)) &&
-                    //         (yearQueryTo === '' || Number(car.year.replace(/г./, '')) <= Number(yearQueryTo)) &&
+                    (yearQueryFrom === '' || Number(auto.year.replace(/г./, '')) >= Number(yearQueryFrom)) &&
+                    (yearQueryTo === '' || Number(auto.year.replace(/г./, '')) <= Number(yearQueryTo)) &&
 
-                    //         (priceQueryFrom === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) >= Number(priceQueryFrom)) &&
-                    //         (priceQueryTo === '' || Number(car.price_for_usd.replace(/≈/, '').replace(/\s/, '')) <= Number(priceQueryTo)) &&
+                    (priceQueryFrom === '' || Number(auto.price_amount_usd.replace(/≈/, '').replace(/\s/, '')) >= Number(priceQueryFrom)) &&
+                    (priceQueryTo === '' || Number(auto.price_amount_usd.replace(/≈/, '').replace(/\s/, '')) <= Number(priceQueryTo)) &&
 
-                    //         (volumeQueryFrom === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) >= Number(volumeQueryFrom)) &&
-                    //         (volumeQueryTo === '' || Number(car.volume.replace(/л/, '').replace(/\s/, '')) <= Number(volumeQueryTo))
-                            
-                    // )
-                    auto.map(car => (
-                        <Suspense fallback={<p>Loading...</p>} key={car.id}><Auto auto={car} key={car.id} /></Suspense>
-                    ))
+                    (volumeQueryFrom === '' || Number(auto.engine_capacity.replace(/л/, '').replace(/\s/, '')) >= Number(volumeQueryFrom)) &&
+                    (volumeQueryTo === '' || Number(auto.engine_capacity.replace(/л/, '').replace(/\s/, '')) <= Number(volumeQueryTo))
+                )).map((car) => (
+                    <Suspense fallback={<p>Loading...</p>} key={car.id}>
+                        <Auto auto={car} key={car.id} />
+                    </Suspense>
+                ))
                 }
             </div>
         </div >
