@@ -17,12 +17,12 @@ class UsersORM:
     @staticmethod
     def get_auth(user):
         with session_factory() as session:
-            query = (select(User.email, User.hashed_password))
+            query = (select(User.email, User.password))
             res_query = session.execute(query)
             query_d = dict(res_query.all())
 
             try:
-                if query_d[f'{user.email}'] == user.hashed_password:
+                if query_d[f'{user.email}'] == user.password:
                     query_user = (select(User.id, User.email))
                     res_query_user = session.execute(query_user)
                     res = dict(res_query_user.all())

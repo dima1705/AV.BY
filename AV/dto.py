@@ -26,13 +26,13 @@ class AutoDTO(BaseModel):
 class UserDTO(BaseModel):
     username: str
     email: str
-    hashed_password: str
+    password: str
     phone: str | None = None
 
 
 class UserAuthDTO(BaseModel):
     email: str
-    hashed_password: str
+    password: str
 
 
 class TgUserDTO(BaseModel):

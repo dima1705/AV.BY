@@ -6,31 +6,11 @@ from starlette.responses import RedirectResponse
 
 
 class UserAdmin(ModelView, model=User):
-    column_list = [User.id, User.username, User.email]
-    column_details_exclude_list = [User.hashed_password]
+    column_list = [c.name for c in User.__table__.c]
     can_delete = False
     name = 'Пользователь'
     name_plural = 'Пользователи'
     icon = "fa-solid fa-user"
-
-    @action(
-        name="approve_users",
-        label="Approve",
-        confirmation_message="Are you sure?",
-        add_in_detail=True,
-        add_in_list=True,
-    )
-    async def approve_users(self, request: Request):
-        pks = request.query_params.get("pks", "").split(",")
-        if pks:
-            for pk in pks:
-                model: User = await self.get_object_for_edit(pk)
-
-        referer = request.headers.get("Referer")
-        if referer:
-            return RedirectResponse(referer)
-        else:
-            return RedirectResponse(request.url_for("admin:list", identity=self.identity))
 
 
 class AutoAdmin(ModelView, model=Auto):
@@ -41,7 +21,6 @@ class AutoAdmin(ModelView, model=Auto):
 
 class TGUserAdmin(ModelView, model=TGUser):
     column_list = [c.name for c in TGUser.__table__.c]
-
     name = 'ТГ пользователь'
     name_plural = 'ТГ пользователи'
     icon = "fa-solid fa-user"

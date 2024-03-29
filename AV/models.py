@@ -120,7 +120,7 @@ class Generation(Base):
         return self.generation
 
 
-class User(SQLAlchemyBaseUserTable[int], Base):
+class User(Base):
 
     __tablename__ = 'user'
 
@@ -128,7 +128,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     email: Mapped[str]
     username: Mapped[str]
     phone: Mapped[Optional[str]]
-    hashed_password: Mapped[str]
+    password: Mapped[str]
     registered_at: Mapped[registered_at]
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(

@@ -53,7 +53,7 @@ const Auto = (props) => {
                 </div>
 
                 <div className='auto-comment'>
-                    <span>{props.auto.description.slice(0, 100)}...</span>
+                    {/* <span>{props.auto.description.slice(0, 100)}...</span> */}
                 </div>
             </div>
 

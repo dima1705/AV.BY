@@ -21,19 +21,19 @@ const API_URL_BRAND = 'http://127.0.0.1:8000/av/brands'
 
 export const Transport = () => {
 
-   
+
     const [currentPage, setCurrentPage] = useState(1)
     const [carsPerPage] = useState(15)
     const [brand, setBrand] = useState([])
 
     useEffect(() => {
-        
+
 
         const getBrand = async () => {
             const response = await axios.get('http://127.0.0.1:8000/bmg/get_bmg')
             setBrand(response.data)
         }
-        
+
         // getAuto()
         getBrand()
     }, [])
@@ -53,19 +53,39 @@ export const Transport = () => {
                     <div className="title">
                         <h1>Объявления о продаже автомобилей с пробегом в Беларуси</h1>
                     </div>
+                    <div className="catalog-brand">
+                        <ul className="catalog-items">
+                            {brand.slice(0, 5).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                        <ul className="catalog-items">
+                            {brand.slice(5, 10).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                        <ul className="catalog-items">
+                            {brand.slice(10, 15).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                        <ul className="catalog-items">
+                            {brand.slice(15, 20).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                        <ul className="catalog-items">
+                            {brand.slice(20, 25).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                        <ul className="catalog-items">
+                            {brand.slice(25, 29).map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
+                        </ul>
+                    </div>
                     {/* <CatalogBrands brand={brand}/> */}
-                    {brand.map(brand => <CatalogBrands brand={brand} key={brand.id} />)}
-                    <SearchFilter/>
+
+                    <SearchFilter />
                     {/* <UsedAuto auto={currentAuto} /> */}
                     {/* <Pagination
                         carsPerPage={carsPerPage}
                         totalCars={auto.length}
                         paginate={paginate}
                     /> */}
-                    
-                </div> 
-            </div> 
-            <AutoJurnal/>  
+
+                </div>
+            </div>
+            <AutoJurnal />
         </div>
 
     )

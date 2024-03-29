@@ -126,22 +126,3 @@ def auto_pars(number_post):
     else:
         photo = 'нет фото'
         ORM.insert_photo(photo)
-
-    # print(
-    #     brand,
-    #     model,
-    #
-    #     year,
-    #     engine_capacity,
-    #     engine_type,
-    #     transmission_type,
-    #     generation_with_years,
-    #     # power,
-    #     # fuel_consumption,
-    #     price_amount_usd,
-    #     price_amount_byn,
-    #     location,
-    #     description,
-    #     f'Превью: {main_photo}',
-    #
-    # )

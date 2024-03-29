@@ -6,13 +6,6 @@ from models import Auto, Brand, Model, Generation, AutoPhoto
 
 class ORM:
 
-    # @staticmethod
-    # def create_tables():
-    #     Base.metadata.drop_all(async_engin)
-    #     sync_engin.echo = True
-    #     Base.metadata.create_all(async_engin)
-    #     sync_engin.echo = True
-
     @staticmethod
     def insert_brand_model_gen(brand, model, generation):
         with session_factory() as session:
