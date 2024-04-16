@@ -216,13 +216,13 @@ const SearchFilter = ({ brand }) => {
                     (auto.model === modelQuery || modelQuery === '') &&
                     (auto.generation_with_years === genQuery || genQuery === '') &&
 
-                    (yearQueryFrom === '' || Number(auto.year.replace(/г./, '')) >= Number(yearQueryFrom)) &&
-                    (yearQueryTo === '' || Number(auto.year.replace(/г./, '')) <= Number(yearQueryTo)) &&
+                    (yearQueryFrom === '' || Number(auto.year) >= Number(yearQueryFrom)) &&
+                    (yearQueryTo === '' || Number(auto.year) <= Number(yearQueryTo)) &&
 
-                    (priceQueryFrom === '' || Number(auto.price_amount_usd.replace(/≈/, '').replace(/\s/, '')) >= Number(priceQueryFrom)) &&
-                    (priceQueryTo === '' || Number(auto.price_amount_usd.replace(/≈/, '').replace(/\s/, '')) <= Number(priceQueryTo)) &&
+                    (priceQueryFrom === '' || Number(auto.price_amount_usd) >= Number(priceQueryFrom)) &&
+                    (priceQueryTo === '' || Number(auto.price_amount_usd) <= Number(priceQueryTo)) &&
 
-                    (volumeQueryFrom === '' || Number(auto.engine_capacity.replace(/л/, '').replace(/\s/, '')) >= Number(volumeQueryFrom)) &&
+                    (volumeQueryFrom === '' || Number(auto.engine_capacity) >= Number(volumeQueryFrom)) &&
                     (volumeQueryTo === '' || Number(auto.engine_capacity.replace(/л/, '').replace(/\s/, '')) <= Number(volumeQueryTo))
                 )).map((car) => (
                     <Suspense fallback={<p>Loading...</p>} key={car.id}>

@@ -1,3 +1,4 @@
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import insert, select
 from models import Auto
 from db import session_factory
@@ -38,3 +39,30 @@ class AutoORM:
             res = session.execute(select_auto_by_id)
             result_select_auto_by_id = res.scalars().all()
             return result_select_auto_by_id
+
+    @staticmethod
+    def select_filtered_car(auto):
+        with session_factory() as session:
+            query = (
+                select(Auto)
+                .filter(
+                    Auto.brand == auto.brand,
+                    Auto.model == auto.model,
+                    Auto.generation_with_years == auto.generation
+
+                )
+            )
+            res = session.execute(query)
+            result = res.unique().scalars().all()
+            result = jsonable_encoder(result)
+            return result
+
+    @staticmethod
+    def select_engine_type():
+        with session_factory() as session:
+            query = (
+                select(Auto.engine_type)
+            )
+            res = session.execute(query)
+            result = res.all()
+            return result

@@ -2,15 +2,11 @@ import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import axios from 'axios'
 
 import './Auto.css'
 
-const Photo = lazy(() => import('./Photo'))
-
 
 const Auto = (props) => {
-    // debugger
 
     return (
         <div className="auto">
@@ -19,8 +15,6 @@ const Auto = (props) => {
                 <div className="photos">
                     <LazyLoadImage src={props.auto.main_photo} />
                 </div>
-                {/* <Suspense fallback={<div>Loading...</div>}><Photo auto={props.auto} /></Suspense> */}
-
             </div>
             <div className='auto-info'>
                 <div className='auto-params'>
@@ -35,25 +29,25 @@ const Auto = (props) => {
 
                         <div className='param-info'>
                             <div className='auto-year'>
-                                {props.auto.year}
+                                {props.auto.year} г.
                             </div>
 
                             <div className='auto-kpp-volume-type_engine'>
-                                {props.auto.transmission_type},&nbsp;{props.auto.engine_capacity},&nbsp;{props.auto.engine_type},
+                                {props.auto.transmission_type},&nbsp;{props.auto.engine_capacity} л.,&nbsp;{props.auto.engine_type},
                             </div>
 
                             <div className='auto-kyzov'>
                                 {props.auto.body_type}
                             </div>
                             <div className='auto-probeg'>
-                                {props.auto.mileage_km}
+                                {props.auto.mileage_km} км
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className='auto-comment'>
-                    {/* <span>{props.auto.description.slice(0, 100)}...</span> */}
+                    <span>{props.auto.description.slice(0, 100)}...</span>
                 </div>
             </div>
 

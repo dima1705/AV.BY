@@ -41,3 +41,9 @@ class TgUserDTO(BaseModel):
     first_name: str
     last_name: str | None = None
 
+
+class FilteredAutoDTO(BaseModel):
+    brand: str | None = None
+    model: str | None = None
+    generation: str | None = None
+
